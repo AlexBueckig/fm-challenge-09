@@ -1,0 +1,48 @@
+@mixin line($position: relative) {
+  position: $position;
+  width: 30px;
+  height: 3px;
+  background: black;
+  transition: transform 0.5s ease-out;
+}
+
+.hamburger {
+  cursor: pointer;
+  height: 32px;
+  padding: 1.5rem 1rem;
+
+  & .line {
+    @include line;
+
+    &::before,
+    &::after {
+      content: '';
+      @include line(absolute);
+    }
+
+    &::before {
+      top: -8px;
+    }
+
+    &::after {
+      top: 8px;
+    }
+  }
+
+  &.open .line {
+    transform: rotate(135deg);
+    &::before {
+      transform: rotate(270deg) translate(-7px, 0px);
+    }
+
+    &::after {
+      transform: rotate(-270deg) translate(-7px, 0px);
+    }
+  }
+}
+
+@include for-tablet-portrait-up {
+  .hamburger {
+    visibility: hidden;
+  }
+}
